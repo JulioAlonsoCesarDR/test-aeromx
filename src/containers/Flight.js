@@ -1,12 +1,18 @@
-import React, { Fragment, useContext } from 'react'
+import React, { useContext } from 'react'
+import { Spinner } from 'react-bootstrap'
 import ListFlight from '../components/ListFlight'
 import FlightContext from '../contexts/context'
 
 const Flight = () => {
-    const context = useContext(FlightContext)
-    const { flightCollection } = context
+    const { flightCollection } = useContext(FlightContext)
+    const { isLoading } = useContext(FlightContext)
+
+    if (isLoading) return <Spinner animation="border" role="status">
+        <span className="sr-only">Loading...</span>
+    </Spinner>
+
     return (
-        <Fragment>
+        <>
             {flightCollection.length !== 0 ?
                 <div className="container">
                     <div className="d-none d-sm-block">
@@ -36,7 +42,7 @@ const Flight = () => {
                     <ListFlight/>
                 </div>
             : null}
-        </Fragment>
+        </>
     )
 }
 
