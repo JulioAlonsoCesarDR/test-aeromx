@@ -1,25 +1,36 @@
 import React, { useReducer } from 'react'
 import FlightContext from './context'
 import reducer from './reducer'
-import { SET_FLIGHT_COLLECTION } from './types'
+import { SET_FLIGHT_COLLECTION, SET_LOADING } from './types'
 
 const FlightState = props => {
     const initialState = {
-        flightCollection: []
+        flightCollection: [],
+        isLoading: false
     }
-    const [state, dispatch] = useReducer(reducer, initialState)
+    const [{ flightCollection, isLoading }, dispatch] = useReducer(reducer, initialState)
 
-    const setFlightCollectionFn = (payload) => {
-        dispatch ({
+    const setFlightCollectionFn = payload => {
+        dispatch({
             type: SET_FLIGHT_COLLECTION,
-            payload: payload
+            payload
         })
     }
+
+    const setLoadingFn = payload => {
+        dispatch({
+            type: SET_LOADING,
+            payload
+        })
+    }
+
     return (
        <FlightContext.Provider
         value={{
-            flightCollection: state.flightCollection,
+            flightCollection,
+            isLoading,
             setFlightCollectionFn,
+            setLoadingFn
         }}
        >
            {props.children}
